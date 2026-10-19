@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff7f8">
+  <title>20/10 · Gửi một chút dịu dàng</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #49323c;
+      --muted: #927783;
+      --rose: #d66d8d;
+      --rose-dark: #b64d70;
+      --paper: rgba(255, 255, 255, .78);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100svh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 12% 14%, rgba(255, 214, 224, .72), transparent 34%),
+        radial-gradient(ellipse at 88% 80%, rgba(255, 226, 214, .75), transparent 35%),
+        linear-gradient(145deg, #fff9f8 0%, #fff2f5 53%, #fff8f2 100%);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: -1;
+      width: 20rem;
+      height: 20rem;
+      border: 1px solid rgba(214, 109, 141, .12);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    body::before { top: -12rem; right: 8%; }
+    body::after { bottom: -14rem; left: 4%; width: 25rem; height: 25rem; }
+
+    .page {
+      position: relative;
+      display: grid;
+      min-height: 100svh;
+      place-items: center;
+      padding: 5.5rem 1.25rem 4.5rem;
+      isolation: isolate;
+    }
+
+    .topbar {
+      position: absolute;
+      z-index: 2;
+      top: 1.35rem;
+      right: clamp(1rem, 4vw, 3rem);
+      left: clamp(1rem, 4vw, 3rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      color: var(--rose-dark);
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .music-button,
+    .gift-button {
+      display: inline-flex;
+      min-height: 2.8rem;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      border: 1px solid rgba(182, 77, 112, .2);
+      border-radius: 999px;
+      color: var(--rose-dark);
+      background: rgba(255, 255, 255, .68);
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 650;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .music-button { padding: .65rem 1rem; }
+    .gift-button {
+      padding: .8rem 1.35rem;
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(135deg, #dc829b, #c95e80);
+      box-shadow: 0 9px 24px rgba(190, 83, 119, .22);
+    }
+
+    .music-button:hover,
+    .gift-button:hover { transform: translateY(-2px); }
+    .music-button:hover { background: white; box-shadow: 0 6px 18px rgba(150, 77, 101, .1); }
+    .gift-button:hover { box-shadow: 0 12px 28px rgba(190, 83, 119, .3); }
+    button:focus-visible { outline: 3px solid #e7a3b6; outline-offset: 3px; }
+
+    .card {
+      position: relative;
+      width: min(100%, 620px);
+      padding: clamp(2rem, 7vw, 4.35rem) clamp(1.45rem, 7vw, 4.5rem);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .9);
+      border-radius: 2rem;
+      background: var(--paper);
+      box-shadow: 0 24px 80px rgba(137, 77, 96, .11), inset 0 1px rgba(255, 255, 255, .9);
+      text-align: center;
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      animation: card-arrive .9s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .card::before,
+    .card::after {
+      position: absolute;
+      width: 8rem;
+      height: 8rem;
+      border: 1px solid rgba(214, 109, 141, .16);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    .card::before { top: -5.8rem; left: -4.4rem; }
+    .card::after { right: -5.2rem; bottom: -5.7rem; width: 10rem; height: 10rem; }
+
+    .eyebrow {
+      margin: 0 0 1.1rem;
+      color: var(--rose-dark);
+      font-size: .72rem;
+      font-weight: 750;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.6rem, 9vw, 5.2rem);
+      font-weight: 400;
+      letter-spacing: -.055em;
+      line-height: .98;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: .32rem;
+      color: var(--rose);
+      font-style: italic;
+      text-shadow: 0 0 26px rgba(214, 109, 141, .22);
+    }
+
+    .date {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      margin: 1.5rem 0 0;
+      color: var(--muted);
+      font-size: .78rem;
+      letter-spacing: .14em;
+    }
+
+    .date::before,
+    .date::after {
+      width: 1.6rem;
+      height: 1px;
+      background: #e7b7c4;
+      content: "";
+    }
+
+    .divider {
+      width: 2.5rem;
+      height: 1px;
+      margin: 1.8rem auto;
+      background: #e6b4c1;
+    }
+
+    .message {
+      min-height: 4.6rem;
+      margin: 0 auto;
+      color: #705863;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: clamp(1.05rem, 3.5vw, 1.25rem);
+      line-height: 1.8;
+      text-shadow: 0 0 18px rgba(214, 109, 141, .18);
+      white-space: pre-line;
+      overflow-wrap: anywhere;
+    }
+
+    .message.is-typing {
+      animation: letter-appear .7s ease both;
+    }
+
+    .message.is-typing::after {
+      display: inline-block;
+      width: 1px;
+      height: 1em;
+      margin-left: 3px;
+      background: var(--rose);
+      content: "";
+      vertical-align: -.12em;
+      animation: blink .8s steps(2, start) infinite;
+    }
+
+    .closing-message {
+      margin: 1.8rem 0 0;
+      color: var(--rose-dark);
+      font-size: clamp(.95rem, 3.5vw, 1.1rem);
+      font-weight: 700;
+      text-shadow: 0 0 16px rgba(214, 109, 141, .2);
+      animation: letter-appear .7s ease both;
+    }
+
+    .closing-message[hidden] { display: none; }
+
+    .hint {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 50%;
+      width: max-content;
+      max-width: calc(100% - 2rem);
+      margin: 0;
+      color: #a68c95;
+      font-size: .74rem;
+      letter-spacing: .04em;
+      text-align: center;
+      transform: translateX(-50%);
+    }
+
+    .floating-layer,
+    .burst-layer {
+      position: fixed;
+      z-index: 3;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -2.5rem;
+      color: var(--heart-color, #e985a2);
+      font-size: var(--heart-size, 1.2rem);
+      opacity: 0;
+      animation: float-up var(--duration, 8s) linear forwards;
+    }
+
+    .spark {
+      position: absolute;
+      width: var(--spark-size, 7px);
+      height: var(--spark-size, 7px);
+      border-radius: 50%;
+      background: var(--spark-color, #fff);
+      box-shadow: 0 0 12px 3px currentColor;
+      color: var(--spark-color, #ffd5df);
+      animation: sparkle .9s ease-out forwards;
+    }
+
+    .heart.burst-heart {
+      bottom: auto;
+      animation: burst-heart 1.5s cubic-bezier(.13, .7, .2, 1) forwards;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+
+    @keyframes float-up {
+      0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-12deg) scale(.7); }
+      12% { opacity: .8; }
+      78% { opacity: .65; }
+      100% { opacity: 0; transform: translate3d(var(--drift, 25px), -112vh, 0) rotate(var(--spin, 25deg)) scale(1.15); }
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(.3); }
+      75% { opacity: .9; }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); }
+    }
+
+    @keyframes burst-heart {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(.35) rotate(0); }
+      12% { opacity: 1; }
+      75% { opacity: .9; }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2) rotate(var(--spin)); }
+    }
+
+    @keyframes blink { to { visibility: hidden; } }
+    @keyframes letter-appear {
+      from { opacity: .55; filter: blur(2px); text-shadow: 0 0 20px rgba(214, 109, 141, .7); }
+      to { opacity: 1; filter: blur(0); }
+    }
+    @keyframes card-arrive {
+      from { opacity: 0; transform: translateY(16px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 480px) {
+      .topbar { top: 1rem; }
+      .brand { font-size: .65rem; letter-spacing: .12em; }
+      .music-button { min-height: 2.55rem; padding: .55rem .8rem; font-size: .78rem; }
+      .card { border-radius: 1.5rem; }
+      .hint { bottom: .75rem; font-size: .68rem; }
+    }
+
+    @media (max-width: 600px), (pointer: coarse) {
+      .card {
+        background: rgba(255, 255, 255, .92);
+        box-shadow: 0 12px 36px rgba(137, 77, 96, .09);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+
+      .heart { text-shadow: 0 1px 5px rgba(226, 111, 146, .25); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">Một ngày thật dịu dàng</div>
+      <button class="music-button" id="musicButton" type="button" aria-label="Bật nhạc nền">
+        <span aria-hidden="true">♫</span>
+        <span id="musicLabel">Bật nhạc</span>
+      </button>
+      <p class="sr-only" id="musicStatus" role="status" aria-live="polite"></p>
+    </header>
+
+    <audio id="backgroundMusic" autoplay loop preload="auto">
+      <source src="cho chut thoi.mp3" type="audio/mpeg">
+      <source src="cho chut thoi.m4a" type="audio/mp4; codecs=mp4a.40.2">
+    </audio>
+
+    <section class="card" aria-labelledby="title">
+      <p class="eyebrow">Chúc mừng</p>
+      <h1 id="title">20/10 <span>nhé!</span></h1>
+      <div class="divider" aria-hidden="true"></div>
+      <p class="message" id="message" aria-live="polite"></p>
+      <p class="closing-message" id="closingMessage" hidden>20/10 vui vẻ nhé nàng đẹp ♡</p>
+    </section>
+
+    <p class="hint">Chạm vào màn hình để thắp lên những trái tim nhỏ</p>
+  </main>
+
+  <div class="floating-layer" id="floatingLayer" aria-hidden="true"></div>
+  <div class="burst-layer" id="burstLayer" aria-hidden="true"></div>
+
+  <script>
+    const greeting = [
+      "Chúc chị em 20/10 luôn xinh đẹp, vui vẻ và hạnh phúc!",
+      "Chúc phái đẹp luôn rạng rỡ, yêu đời và gặp nhiều may mắn!",
+      "Chúc các nàng ngày càng xinh đẹp, thành công và được yêu thương!",
+      "Chúc chị em luôn tươi như hoa, đời luôn nở hoa! 🌷",
+      "Chúc một nửa thế giới luôn bình an, hạnh phúc và tràn đầy năng lượng!",
+      "20/10 vui vẻ nhé! Chúc mọi điều tốt đẹp nhất sẽ đến với bạn!",
+      "Chúc các chị em luôn trẻ trung, tự tin và tỏa sáng theo cách riêng!",
+      "Chúc ngày nào cũng là 20/10, luôn được yêu thương và chiều chuộng"
+    ].join("\n");
+    const colors = ["#ed7898", "#d95e7d", "#fff4f6", "#f4a0b4", "#e8a0ad"];
+    const floatingLayer = document.getElementById("floatingLayer");
+    const burstLayer = document.getElementById("burstLayer");
+    const message = document.getElementById("message");
+    const closingMessage = document.getElementById("closingMessage");
+    const musicButton = document.getElementById("musicButton");
+    const musicLabel = document.getElementById("musicLabel");
+    const musicStatus = document.getElementById("musicStatus");
+    const currentAudio = document.getElementById("backgroundMusic");
+    const isTouchDevice = window.matchMedia("(max-width: 600px), (pointer: coarse)").matches;
+    const maxFloatingHearts = isTouchDevice ? 28 : 70;
+    const heartSpawnInterval = isTouchDevice ? 320 : 180;
+    let playPending = false;
+
+    function addFloatingHeart() {
+      if (floatingLayer.childElementCount >= maxFloatingHearts) return;
+      const heart = document.createElement("span");
+      heart.className = "heart";
+      heart.textContent = Math.random() > .18 ? "♥" : "♡";
+      heart.style.left = `${Math.random() * 100}%`;
+      heart.style.setProperty("--heart-color", colors[Math.floor(Math.random() * colors.length)]);
+      heart.style.setProperty("--heart-size", `${.7 + Math.random() * 1.05}rem`);
+      heart.style.setProperty("--duration", `${7 + Math.random() * 5}s`);
+      heart.style.setProperty("--drift", `${Math.round(Math.random() * 110 - 55)}px`);
+      heart.style.setProperty("--spin", `${Math.round(Math.random() * 55 - 25)}deg`);
+      heart.addEventListener("animationend", () => heart.remove(), { once: true });
+      floatingLayer.append(heart);
+    }
+
+    function burstAt(x, y, count = 9) {
+      for (let i = 0; i < count; i += 1) {
+        const angle = (Math.PI * 2 * i) / count + Math.random() * .35;
+        const distance = 35 + Math.random() * 65;
+        const heart = document.createElement("span");
+        heart.className = "heart burst-heart";
+        heart.textContent = i % 3 === 0 ? "♡" : "♥";
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+        heart.style.setProperty("--heart-color", colors[Math.floor(Math.random() * colors.length)]);
+        heart.style.setProperty("--heart-size", `${.8 + Math.random() * .7}rem`);
+        heart.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+        heart.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+        heart.style.setProperty("--spin", `${Math.round(Math.random() * 80 - 40)}deg`);
+        heart.addEventListener("animationend", () => heart.remove(), { once: true });
+        burstLayer.append(heart);
+      }
+
+      for (let i = 0; i < Math.ceil(count * .8); i += 1) {
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 25 + Math.random() * 85;
+        const spark = document.createElement("span");
+        spark.className = "spark";
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+        spark.style.setProperty("--spark-color", colors[Math.floor(Math.random() * colors.length)]);
+        spark.style.setProperty("--spark-size", `${3 + Math.random() * 5}px`);
+        spark.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+        spark.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+        spark.addEventListener("animationend", () => spark.remove(), { once: true });
+        burstLayer.append(spark);
+      }
+    }
+
+    function typeGreeting(text) {
+      const characters = typeof Intl.Segmenter === "function"
+        ? Array.from(new Intl.Segmenter("vi", { granularity: "grapheme" }).segment(text), (part) => part.segment)
+        : Array.from(text);
+      let index = 0;
+      message.textContent = "";
+      message.classList.add("is-typing");
+
+      function typeNext() {
+        if (index >= characters.length) {
+          message.classList.remove("is-typing");
+          closingMessage.hidden = false;
+          return;
+        }
+
+        const character = characters[index];
+        message.append(document.createTextNode(character));
+        index += 1;
+        const delay = character === "\n" ? 110 : ".!?,：；".includes(character) ? 80 : 14;
+        window.setTimeout(typeNext, delay);
+      }
+
+      typeNext();
+    }
+
+    document.addEventListener("pointerdown", (event) => {
+      if (currentAudio.paused) startMusic();
+      if (event.target.closest("button, input")) return;
+      burstAt(event.clientX, event.clientY, 8);
+    });
+
+    async function startMusic() {
+      if (!currentAudio.paused || playPending) return;
+      playPending = true;
+      try {
+        await currentAudio.play();
+      } catch (error) {
+        console.error("Không phát được tệp nhạc nền.", error);
+        if (!currentAudio.paused) return;
+        musicLabel.textContent = "Bật nhạc";
+        musicButton.setAttribute("aria-label", "Bật nhạc nền");
+        musicStatus.textContent = error.name === "NotAllowedError"
+          ? "Trình duyệt chặn tự phát nhạc. Chạm nút Bật nhạc để nghe."
+          : "Không phát được nhạc. Kiểm tra tệp cho chut thoi.mp3 có nằm cùng thư mục với trang web không.";
+      } finally {
+        playPending = false;
+      }
+    }
+
+    musicButton.addEventListener("click", startMusic);
+
+    currentAudio.addEventListener("playing", () => {
+      musicButton.disabled = true;
+      musicLabel.textContent = "Đang phát nhạc";
+      musicStatus.textContent = "Nhạc nền đang phát.";
+    });
+
+    currentAudio.addEventListener("pause", () => {
+      if (currentAudio.ended) return;
+      musicButton.disabled = false;
+      musicLabel.textContent = "Bật nhạc";
+      musicButton.setAttribute("aria-label", "Bật nhạc nền");
+    });
+
+    currentAudio.addEventListener("error", () => {
+      console.error("Không tải được tệp nhạc nền.", currentAudio.error);
+      musicButton.disabled = false;
+      musicLabel.textContent = "Thử phát nhạc";
+      musicButton.setAttribute("aria-label", "Thử phát nhạc nền");
+      musicStatus.textContent = "Không tải được nhạc. Kiểm tra tệp cho chut thoi.mp3 và cho chut thoi.m4a có nằm cùng thư mục với trang web không.";
+    });
+
+    window.setInterval(() => {
+      if (!document.hidden) addFloatingHeart();
+    }, heartSpawnInterval);
+    typeGreeting(greeting);
+    startMusic();
+  </script>
+</body>
+</html>
